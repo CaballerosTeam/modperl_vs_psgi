@@ -1,0 +1,4 @@
+<ifModule perl_module>
+    SetHandler perl-script
+    PerlResponseHandler Core::ModPerlHandler
+</ifModule>
