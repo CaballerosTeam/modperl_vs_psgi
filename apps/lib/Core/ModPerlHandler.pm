@@ -5,12 +5,15 @@ use warnings FATAL => 'all';
 use Apache2::RequestRec;
 use Apache2::RequestIO;
 use Apache2::Const -compile => 'OK';
+use Core::Handler;
 
 
 sub handler {
     my Apache2::RequestRec $r = shift;
+
     $r->content_type('text/html');
-    print '<h1>It\'s work! '.time.'</h1>';
+
+    print Core::Handler::get_body();
 
     return Apache2::Const::OK;
 }
