@@ -21,7 +21,7 @@ for (1..int($kwargs{'-n'})) {
 
     my $benchmark = Benchmark::Factory->create(
         concurency => [1..20],
-        requests_number => 100,
+        requests_number => 100_000,
         uri => $kwargs{'-u'},
         output_file_name => sprintf('%s__%s.csv', $domain, $cdate),
     );
