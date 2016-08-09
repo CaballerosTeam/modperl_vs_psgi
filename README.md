@@ -13,3 +13,5 @@ The research that aims to compare performance of web applications based on mod_p
 ### PSGI configuration:
 - Nginx 1.6.3
 - uWSGI 2.0.13.1
+
+First research result your can see on [project page](https://caballerosteam.github.io/modperl_vs_psgi/).
