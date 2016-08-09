@@ -4,8 +4,90 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="favicon.png" />
     <title>mod_perl vs. PSGI benchmark</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Concurrency', 'Apache / mod_perl', 'Nginx / uWSGI / PSGI'],
+                [1, 254.32, 488.83],    [1, 254.23, 495.11],    [1, 277.72, 494.28],
+                [2, 1079.18, 1143.23],  [2, 1092.45, 1143.64],  [2, 1042.49, 1141.20],
+                [3, 1447.85, 1365.07],  [3, 1431.19, 1343.03],  [3, 1398.57, 1341.16],
+                [4, 1467.45, 1539.03],  [4, 1414.33, 1529.81],  [4, 1381.85, 1581.04],
+                [5, 1422.61, 1629.01],  [5, 1432.95, 1678.92],  [5, 1404.10, 1690.35],
+                [6, 1449.32, 1712.10],  [6, 1391.20, 1706.96],  [6, 1390.84, 1673.77],
+                [7, 1435.41, 1685.79],  [7, 1465.07, 1694.03],  [7, 1412.71, 1749.53],
+                [8, 1369.35, 1762.94],  [8, 1391.83, 1733.51],  [8, 1439.33, 1767.74],
+                [9, 1395.05, 1619.10],  [9, 1481.12, 1746.47],  [9, 1389.88, 1735.60],
+                [10, 1420.79 ,1763.83], [10, 1445.97, 1698.64], [10, 1381.05, 1645.92],
+                [11, 1416.23, 1743.44], [11, 1451.56, 1783.92], [11, 1407.44, 1627.79],
+                [12, 1447.71, 1729.28], [12, 1389.61, 1747.87], [12, 1396.73, 1700.47],
+                [13, 1475.34, 1723.03], [13, 1457.50, 1724.04], [13, 1418.74, 1689.13],
+                [14, 1430.46, 1783.38], [14, 1470.93, 1714.80], [14, 1421.51, 1755.95],
+                [15, 1430.74, 1796.77], [15, 1405.18, 1767.92], [15, 1437.02, 1763.80],
+                [16, 1475.27, 1773.54], [16, 1477.14, 1809.69], [16, 1470.97, 1725.52],
+                [17, 1446.70, 1769.11], [17, 1412.60, 1776.07], [17, 1397.91, 1822.07],
+                [18, 1481.63, 1805.45], [18, 1470.68, 1723.41], [18, 1403.06, 1829.08],
+                [19, 1410.79, 1756.13], [19, 1428.42, 1747.63], [19, 1415.09, 1770.65],
+                [20, 1481.09, 1839.08], [20, 1467.99, 1787.25], [20, 1404.11, 1809.90]
+            ]);
+
+            var options = {
+                title: 'Concurrency vs. requests per second',
+                subtitle: 'Fig. 1.1',
+                width: 900,
+                height: 500,
+                legend: {position: 'bottom'},
+                crosshair: 'none',
+                hAxis: {
+                    title: 'Concurrency',
+                    gridlines: {
+                        count: 11
+                    }
+                },
+                vAxis: {
+                    title: 'Requests per second',
+                    gridlines: {
+                        count: 7
+                    }
+                },
+                trendlines: {
+                    0: {
+                        type: 'polynomial',
+                        degree: 7,
+                        visibleInLegend: true,
+                        pointSize: 2,
+                        lineWidth: 5,
+                        labelInLegend: ''
+                    },
+                    1: {
+                        type: 'polynomial',
+                        degree: 7,
+                        visibleInLegend: true,
+                        pointSize: 2,
+                        lineWidth: 5,
+                        labelInLegend: ''
+                    }
+                }
+            };
+
+            var chart = new google.visualization.ScatterChart(
+                document.getElementById('concurrency_vs_requests_per_second')
+            );
+            chart.draw(data, options);
+        }
+    </script>
 </head>
 <body>
-    <h1>It's work</h1>
+    <h1>mod_perl vs. PSGI benchmark</h1>
+    <h2>1. Requests per second</h2>
+    <p>
+        Dependence of handled request per second and concurrency both mod_perl and PSGI shown in Fig. 1.1.
+        With the growth of concurrency in both modes saturation reached quickly, however, PSGI mode allowed to handle
+        approximately 20% more requests.
+    </p>
+    <div id="concurrency_vs_requests_per_second"></div>
 </body>
 </html>
