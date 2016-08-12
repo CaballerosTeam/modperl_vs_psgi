@@ -3,6 +3,7 @@ package Benchmark::AB;
 use strict;
 use warnings FATAL => 'all';
 use Carp;
+use threads;
 use Benchmark::AB::Result;
 
 my $AB_NAME = 'ab2';
@@ -69,7 +70,16 @@ sub run_benchmark {
     }
 
     my $command = sprintf('%s -c %u -n %u %s', $AB_NAME, $kwargs{concurency}, $kwargs{requests_number}, $kwargs{uri});
-    my $raw_data = `$command`;
+
+    my threads $t = threads->create(
+        {context => 'scalar'},
+        sub {
+            return `$_[0]`;
+        },
+        $command
+    );
+
+    my $raw_data = $t->join();
 
     return Benchmark::AB::Result->new($raw_data);
 }
