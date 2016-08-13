@@ -4,18 +4,25 @@ use strict;
 use warnings FATAL => 'all';
 use Text::CSV_XS;
 use Benchmark::AB;
+use Benchmark::Director;
 
 
 #@classmethod
-#@returns Benchmark::AB
+#@returns Benchmark::Director
 #@method
 sub create {
     my (undef, %kwargs) = @_;
 
     my $csv = Text::CSV_XS->new();
-    $kwargs{csv} = $csv;
 
-    return Benchmark::AB->new(%kwargs);
+    my $ab = Benchmark::AB->new(map {$_ => $kwargs{$_}} (qw/requests_number uri/));
+
+    return Benchmark::Director->new(
+        concurrency => $kwargs{concurrency},
+        csv => $csv,
+        output_file_name => $kwargs{output_file_name},
+        ab => $ab,
+    );
 }
 
 1;

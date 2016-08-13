@@ -20,12 +20,11 @@ for (1..int($kwargs{'-n'})) {
     my $cdate = POSIX::strftime('%d%m%Y_%H%M%S', localtime(time));
 
     my $benchmark = Benchmark::Factory->create(
-        concurency => [1..20],
-        requests_number => 100_000,
+        concurrency => [1..20],
+        requests_number => 100,
         uri => $kwargs{'-u'},
         output_file_name => sprintf('%s__%s.csv', $domain, $cdate),
     );
 
     $benchmark->run();
 }
-
