@@ -10,8 +10,16 @@ use Benchmark::Factory;
 
 
 my %kwargs = @ARGV;
-if (!@ARGV || !$kwargs{'-u'} || !$kwargs{'-n'} || !Scalar::Util::looks_like_number($kwargs{'-n'})) {
-    printf("Usage: %s -u [URL] -n [REPEATS]\n", $0);
+if (
+    !@ARGV
+    || !$kwargs{'-r'}
+    || !Scalar::Util::looks_like_number($kwargs{'-r'})
+    || !$kwargs{'-u'}
+    || !$kwargs{'-n'}
+    || !Scalar::Util::looks_like_number($kwargs{'-n'})
+    || !$kwargs{'-m'}
+) {
+    printf("Usage: %s -r [REQUSTS NUMBER] -u [URL] -n [REPEATS] -m [PROCESSES MASK]\n", $0);
     exit(0);
 }
 
@@ -21,9 +29,10 @@ for (1..int($kwargs{'-n'})) {
 
     my $benchmark = Benchmark::Factory->create(
         concurrency => [1..20],
-        requests_number => 100,
+        requests_number => $kwargs{'-r'},
         uri => $kwargs{'-u'},
         output_file_name => sprintf('%s__%s.csv', $domain, $cdate),
+        processes_mask => $kwargs{'-m'},
     );
 
     $benchmark->run();
