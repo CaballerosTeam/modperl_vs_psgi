@@ -19,7 +19,7 @@ if (
     || !Scalar::Util::looks_like_number($kwargs{'-n'})
     || !$kwargs{'-m'}
 ) {
-    printf("Usage: %s -r [REQUSTS NUMBER] -u [URL] -n [REPEATS] -m [PROCESSES MASK]\n", $0);
+    printf("Usage: %s -r [REQUESTS NUMBER] -u [URL] -n [REPEATS] -m [PROCESSES MASK]\n", $0);
     exit(0);
 }
 
