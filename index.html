@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="The research that aims to compare performance of web applications based on mod_perl and PSGI." />
     <link rel="icon" type="image/png" href="favicon.png" />
     <title>mod_perl vs. PSGI benchmark</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"
@@ -224,8 +225,7 @@
                     }
                 },
                 optionsRps = $.extend({}, optionsCommon, {
-                    title: 'Concurrency vs. requests per second',
-                    subtitle: 'Fig. 1.1',
+                    title: 'Fig. 1.1. Concurrency vs. requests per second (dual core)',
                     vAxis: {
                         title: 'Requests per second',
                         gridlines: {
@@ -251,10 +251,11 @@
                         }
                     }
                 }),
-                optionsRps2 = $.extend(optionsRps, {subtitle: 'Fig. 1.2'}),
+                optionsRps2 = $.extend({}, optionsRps, {
+                    title: 'Fig. 1.2. Concurrency vs. requests per second (quad core)'
+                }),
                 optionsRt = $.extend({}, optionsCommon, {
-                    title: 'Concurrency vs. request time',
-                    subtitle: 'Fig. 2.1',
+                    title: 'Fig. 2.1. Concurrency vs. request time (dual core)',
                     vAxis: {
                         title: 'Request time (ms)',
                         gridlines: {
@@ -278,10 +279,11 @@
                         }
                     }
                 }),
-                optionsRt2 = $.extend(optionsRt, {subtitle: 'Fig. 2.2'}),
+                optionsRt2 = $.extend({}, optionsRt, {
+                    title: 'Fig. 2.2. Concurrency vs. request time (quad core)'
+                }),
                 optionsRAM = $.extend({}, optionsCommon, {
-                    title: 'Concurrency vs. Max used RAM',
-                    subtitle: 'Fig. 3.1',
+                    title: 'Fig. 3.1. Concurrency vs. Max used RAM (dual core)',
                     vAxis: {
                         title: 'Max used RAM (Mb)',
                         gridlines: {
@@ -307,7 +309,9 @@
                         }
                     }
                 }),
-                optionsRAM2 = $.extend(optionsRAM, {subtitle: 'Fig. 3.2'}),
+                optionsRAM2 = $.extend({}, optionsRAM, {
+                    title: 'Fig. 3.2. Concurrency vs. Max used RAM (quad core)'
+                }),
                 chartRps = new google.visualization.ScatterChart(
                     $('#concurrency_vs_requests_per_second').get(0)
                 ),
@@ -338,9 +342,16 @@
 </head>
 <body>
     <h1>mod_perl vs. PSGI benchmark</h1>
+    <h2>Introduction</h2>
+    <p>
+        Purpose of this research is compare performance of web applications based on mod_perl and PSGI. To take into
+        account effects of multi-core systems, test were run on two machines. First one has two cores, and second four.
+        In this research considered three parameters: number of handled request per second, the average time required
+        to process single request and amount of RAM consumed.
+    </p>
     <h2>1. Requests per second</h2>
     <p>
-        Dependence of handled request per second and concurrency both mod_perl and PSGI shown in Fig. 1.1.
+        Dependence of handled request per second and concurrency both mod_perl and PSGI shown in Fig. 1.1 and 1.2.
         With the growth of concurrency in both modes saturation reached quickly, however, PSGI mode allowed to handle
         approximately 20% more requests.
     </p>
@@ -348,6 +359,11 @@
     <div id="concurrency_vs_requests_per_second-2"></div>
 
     <h2>2. Request time</h2>
+    <p>
+        The average time required to process single request increases linearly with increasing concurrency both with
+        mod_perl and PSGI. The difference becomes noticeable only in case of large value of concurrency. In PSGI mode
+        request time was 15 - 20% less than in mod_perl.
+    </p>
     <div id="concurrency_vs_request_time"></div>
     <div id="concurrency_vs_request_time-2"></div>
 
