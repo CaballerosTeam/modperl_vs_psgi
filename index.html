@@ -362,13 +362,24 @@
     <p>
         The average time required to process single request increases linearly with increasing concurrency both with
         mod_perl and PSGI. The difference becomes noticeable only in case of large value of concurrency. In PSGI mode
-        request time was 15 - 20% less than in mod_perl.
+        request time was 15 - 20% less than in mod_perl. Dependence of request time and concurrency shown in Fig. 2.1
+        and 2.2 for dual- and quad-core systems respectively.
     </p>
     <div id="concurrency_vs_request_time"></div>
     <div id="concurrency_vs_request_time-2"></div>
 
     <h2>3. RAM usage</h2>
+    <p>
+        Dependence of maximum amount of RAM consumed and concurrency shown in Fig. 3.1 and 3.2. Web server Apache in
+        mod_perl mode with increasing concurrency constantly needed more memory. At the same time, memory usage of bunch
+        nginx and uWSGI is independent of concurrency.
+    </p>
     <div id="concurrency_vs_ram"></div>
     <div id="concurrency_vs_ram-2"></div>
+
+    <h2>Conclusion</h2>
+    <p>
+
+    </p>
 </body>
 </html>
